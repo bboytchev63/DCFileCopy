@@ -28,9 +28,10 @@ $OUName = "OU=$ou_1,OU=$ouRoot"
 $OU = "$OUName,$DomainName"
 #---------------------------
 $DayName = [datetime]::Now.DayOfWeek 
+$YearMontNames =[datetime]::Now.Year+[datetime]::Now.Month
 $flDay = $true # Put in dedestination day of week
 $flOU = $true  # Put in dedestination OU name
-
+$LogFile = $YearMontNames+$LogFile
 
 # Ensure log directory exists
 $LogDir = Split-Path -Path $LogFile -Parent
@@ -92,6 +93,6 @@ if ($IfCompress) {
     }
      
     Add-Content -Path $LogFile -Value "- End Archive, backup [$ouRoot'\'$ou_1] $(Get-Date) -"
-    Add-Content -Path $LogFile -Value  "$BackupDestinationRoot\$ou_1\$dayname"
+    # Add-Content -Path $LogFile -Value  "$BackupDestinationRoot\$ou_1\$dayname"
 }
 Write-Host "Backup process completed. Check log:  + $LogFile " 
