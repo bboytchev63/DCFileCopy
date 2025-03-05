@@ -3,6 +3,10 @@
 $BackupSourcePath = "D$\My Documents\"   # Path to backup (relative to each machine)
 $backupFileExt = "*.doc*"
 $BackupSource = $BackupSourcePath+$backupFileExt
+#-----------------
+$YearName = (Get-Date).ToString("yyyy")
+$MonthName= [datetime]::Now.Month
+
 # Define Domain Name 
 $DomainName ="DC=court-sh,DC=local"
 
@@ -11,16 +15,17 @@ $Test = $true
 $IfCompress = $true # If not test make it $True
 $ouRoot = "court-sh"  # OU Root
 #---------------------------
+
 # Define OU Root name and sub Name 
 if ($Test -eq $false) {
     $ou_1 = "magistrati" # OU Level 1    
     $BackupDestinationRoot =  "f:\bak"        # "\\BackupServer\Backup"  # Central backup location (Modify as needed)
-    $LogFile = "f:\bak\backup_log.txt"        # Log file path
+    $LogFile = "f:\bak\$Yearname$MontName_backup_log.txt"        # Log file path
 }
 else {  ###### For Test ######
-    $ou_1 = "secretaries" # OU Level 1    
+    $ou_1 = "staff" # OU Level 1    
     $BackupDestinationRoot =  "J:\Projects\powershell\data" 
-    $LogFile = "J:\Projects\powershell\data\backup_log.txt"        
+    $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
 }
 $OUName = "OU=$ou_1,OU=$ouRoot"
 
@@ -28,10 +33,9 @@ $OUName = "OU=$ou_1,OU=$ouRoot"
 $OU = "$OUName,$DomainName"
 #---------------------------
 $DayName = [datetime]::Now.DayOfWeek 
-$YearMontNames =[datetime]::Now.Year+[datetime]::Now.Month
 $flDay = $true # Put in dedestination day of week
 $flOU = $true  # Put in dedestination OU name
-$LogFile = $YearMontNames+$LogFile
+
 
 # Ensure log directory exists
 $LogDir = Split-Path -Path $LogFile -Parent
