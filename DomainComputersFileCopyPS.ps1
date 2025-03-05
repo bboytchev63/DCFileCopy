@@ -7,7 +7,7 @@ $BackupSource = $BackupSourcePath+$backupFileExt
 $DomainName ="DC=court-sh,DC=local"
 
 # For testing
-$Test = $false 
+$Test = $true 
 $IfCompress = $true # If not test make it $True
 $ouRoot = "court-sh"  # OU Root
 #---------------------------
@@ -82,7 +82,7 @@ Add-Content -Path $LogFile -Value "Start archive $(Get-Date)"
 if ($IfCompress) {
     if ( $flDay ) { 
         if ($flOU) {
-            Compress-Archive -Path "$BackupDestinationRoot\$ou_1\" -Update -DestinationPath $BackupDestinationRoot\$ou_1$dayName.zip -CompressionLevel Optimal
+            Compress-Archive -Path "$BackupDestinationRoot\$ou_1\$dayname" -Update -DestinationPath $BackupDestinationRoot\$ou_1$dayName.zip -CompressionLevel Optimal
         }
         else {
             Compress-Archive -Path "$BackupDestinationRoot\" -Update -DestinationPath $BackupDestinationRoot\$dayName.zip -CompressionLevel Optimal
@@ -90,7 +90,8 @@ if ($IfCompress) {
          
     
     }
-    Add-Content -Path $LogFile -Value  "--- End Archive ---" 
-    Add-Content -Path $LogFile -Value "--- End_backup [$ouRoot'\'$ou_1] $(Get-Date) ---"
+     
+    Add-Content -Path $LogFile -Value "- End Archive, backup [$ouRoot'\'$ou_1] $(Get-Date) -"
+    Add-Content -Path $LogFile -Value  "$BackupDestinationRoot\$ou_1\$dayname"
 }
-Write-Host "Backup process completed. Check log:  + $LogFile "
+Write-Host "Backup process completed. Check log:  + $LogFile " 
