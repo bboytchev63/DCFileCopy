@@ -1,12 +1,13 @@
 
-# Backup Configuration
+# Backup Configuration Ver. 0.0.0.3
 $BackupSourcePath = "D$\My Documents\"   # Path to backup (relative to each machine)
 $backupFileExt = "*.doc*"
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
 $YearName = (Get-Date).ToString("yyyy")
 $MonthName= [datetime]::Now.Month
-
+$logFilePath = "f:\bak"
+# $logfileTestingPath ="J:\Projects\powershell\data\"
 # Define Domain Name 
 $DomainName ="DC=court-sh,DC=local"
 
@@ -20,10 +21,10 @@ $ouRoot = "court-sh"  # OU Root
 if ($Test -eq $false) {
     $ou_1 = "magistrati" # OU Level 1    
     $BackupDestinationRoot =  "f:\bak"        # "\\BackupServer\Backup"  # Central backup location (Modify as needed)
-    $LogFile = "f:\bak\$Yearname$MontName_backup_log.txt"        # Log file path
+    $LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
 }
 else {  ###### For Test ######
-    $ou_1 = "staff" # OU Level 1    
+    $ou_1 = "secretaries" # OU Level 1    
     $BackupDestinationRoot =  "J:\Projects\powershell\data" 
     $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
 }
