@@ -1,6 +1,6 @@
 
 # Backup Configuration Ver. 0.0.0.3
-$BackupSourcePath = "D$\My Documents\"   # Path to backup (relative to each machine)
+$BackupSourcePath = "D$\"   # Path to backup (relative to each machine)
 $backupFileExt = "*.doc*"
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
@@ -12,7 +12,8 @@ $logFilePath = "f:\bak"
 $DomainName ="DC=court-sh,DC=local"
 
 # For testing
-$Test = $true 
+$Test = $false
+$CopyUsersDir = $True
 $IfCompress = $true # If not test make it $True
 $ouRoot = "court-sh"  # OU Root
 #---------------------------
@@ -24,7 +25,7 @@ if ($Test -eq $false) {
     $LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
 }
 else {  ###### For Test ######
-    $ou_1 = "secretaries" # OU Level 1    
+    $ou_1 = "delovodstvo" # OU Level 1    
     $BackupDestinationRoot =  "J:\Projects\powershell\data" 
     $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
 }
@@ -75,6 +76,9 @@ foreach ($Computer in $Computers) {
         # Perform backup using robocopy
         # robocopy $SourcePath $DestinationPath /E /COPY:DAT /LOG+:$LogFile /R:2 /W:5
         xcopy $SourcePath $DestinationPath /S /D /Y /Z 
+        if ($CopyUsersDir) {
+            xcopy "\\$Computer\c$\users\$backupFileExt" $DestinationPath\users\ /S /D /Y /Z
+        } 
         # Log success
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer"
     } else {
