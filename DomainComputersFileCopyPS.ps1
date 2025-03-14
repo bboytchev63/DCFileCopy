@@ -1,7 +1,16 @@
 
-# Backup Configuration Ver. 0.0.0.3
-$BackupSourcePath = "D$\"   # Path to backup (relative to each machine)
-$backupFileExt = "*.doc*"
+# Backup Configuration Ver. 0.0.0.4
+# to do : add params
+param (
+    [parameter(mandatory), Position = 0]
+    [string]$BackupSourcePath, 
+    [parameter(Position = 1)]
+    [string]$backupFileExt = "*.xls?"
+
+)
+# $BackupSourcePath = "D$\"   # Path to backup (relative to each machine)
+# $backupFileExt = "*.doc*"
+
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
 $YearName = (Get-Date).ToString("yyyy")
@@ -12,7 +21,7 @@ $logFilePath = "f:\bak"
 $DomainName ="DC=court-sh,DC=local"
 
 # For testing
-$Test = $false
+$Test = $true
 $CopyUsersDir = $True
 $IfCompress = $true # If not test make it $True
 $ouRoot = "court-sh"  # OU Root
@@ -25,7 +34,7 @@ if ($Test -eq $false) {
     $LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
 }
 else {  ###### For Test ######
-    $ou_1 = "delovodstvo" # OU Level 1    
+    $ou_1 = "staff" # OU Level 1    
     $BackupDestinationRoot =  "J:\Projects\powershell\data" 
     $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
 }
