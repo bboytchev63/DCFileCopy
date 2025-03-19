@@ -1,8 +1,8 @@
 
-# Backup Configuration Ver. 0.0.0.4
+# Backup Configuration Ver. 0.0.0.5
 # to do : add params
 param (
-    [parameter(mandatory), Position = 0]
+    [parameter(mandatory ,  Position = 0)]
     [string]$BackupSourcePath, 
     [parameter(Position = 1)]
     [string]$backupFileExt = "*.xls?"
@@ -10,13 +10,13 @@ param (
 )
 # $BackupSourcePath = "D$\"   # Path to backup (relative to each machine)
 # $backupFileExt = "*.doc*"
-
+$logFilePath = "f:\bak"
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
 $YearName = (Get-Date).ToString("yyyy")
 $MonthName= [datetime]::Now.Month
-$logFilePath = "f:\bak"
-# $logfileTestingPath ="J:\Projects\powershell\data\"
+
+
 # Define Domain Name 
 $DomainName ="DC=court-sh,DC=local"
 
