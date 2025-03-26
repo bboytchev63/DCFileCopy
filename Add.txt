@@ -1,0 +1,20 @@
+$dn = $testingThis -split ',', 2
+$dn = $dn[1]
+$dn
+================================
+$ouName = "magistrati"
+Get-ADOrganizationalUnit -Filter "Name -eq '$ouName'" -Properties DistinguishedName | Select-Object -ExpandProperty DistinguishedName
+=============================
+# Define OU Root name and sub Name 
+                            <#
+                            if ($Test -eq $false) {
+                                $ou_1 = "magistrati" # OU Level 1    
+                                $BackupDestinationRoot =  "f:\bak"        # "\\BackupServer\Backup"  # Central backup location (Modify as needed)
+                                $LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
+                            }
+                            else {  ###### For Test ######
+                                $ou_1 = "staff" # OU Level 1    
+                                $BackupDestinationRoot =  "J:\Projects\powershell\data" 
+                                $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
+                            }
+#>

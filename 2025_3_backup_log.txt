@@ -1,0 +1,23 @@
+---------- Start_backup 03/26/2025 16:36:31 ----------
+03/26/2025 16:36:33 - Backup successful for W4W10SHDC63
+03/26/2025 16:36:37 - Skipping W4W10SHDC08 (Offline)
+03/26/2025 16:36:47 - Backup successful for W4W10SHDC07
+03/26/2025 16:37:25 - Backup successful for W4W10SHDC57
+03/26/2025 16:37:26 - Skipping W4W10SHDC06 (Offline)
+03/26/2025 16:37:35 - Backup successful for W4W10SHDC05
+Start archive 03/26/2025 16:37:35
+- End Archive, backup [court-sh'\'staff] 03/26/2025 16:37:35 -
+---------- Start_backup 03/26/2025 16:38:32 ----------
+03/26/2025 16:38:33 - Backup successful for W4W10SHDC28
+03/26/2025 16:38:37 - Backup successful for W4W10SHDC29
+03/26/2025 16:38:45 - Backup successful for W4W10SHDC42
+03/26/2025 16:38:46 - Backup successful for W4W10SHDC27
+03/26/2025 16:38:49 - Backup successful for W4W10SHDC46
+03/26/2025 16:38:52 - Backup successful for W4W10SHDC47
+03/26/2025 16:38:56 - Backup successful for W4W10SHDC45
+03/26/2025 16:39:15 - Backup successful for W4W10SHDC44
+03/26/2025 16:39:26 - Backup successful for W4W10SHDC41
+03/26/2025 16:39:29 - Skipping W4W10SHDC48 (Offline)
+03/26/2025 16:39:31 - Skipping W4W10SHDC43 (Offline)
+Start archive 03/26/2025 16:39:31
+- End Archive, backup [court-sh'\'secretaries] 03/26/2025 16:39:33 -

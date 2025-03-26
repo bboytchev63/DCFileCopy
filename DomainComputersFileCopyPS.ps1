@@ -1,52 +1,39 @@
-
-# Backup Configuration Ver. 0.0.0.5
+# Backup Configuration Ver. 0.0.0.6
 # to do : add params
 param (
     [parameter(mandatory ,  Position = 0)]
     [string]$BackupSourcePath, 
-    [parameter(Position = 1)]
-    [string]$backupFileExt = "*.xls?"
+    [parameter(mandatory ,  Position = 1)]
+    [string]$BackupDestinationRoot, 
+    [parameter(Position = 2)]
+    [string]$backupFileExt = "*.ppt?",
+    [parameter(Position = 3)]
+    [string]$ou_1 = "staff"  
 
 )
-# $BackupSourcePath = "D$\"   # Path to backup (relative to each machine)
-# $backupFileExt = "*.doc*"
-$logFilePath = "f:\bak"
+$logFilePath =  Get-Location
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
-$YearName = (Get-Date).ToString("yyyy")
-$MonthName= [datetime]::Now.Month
-
-
-# Define Domain Name 
-$DomainName ="DC=court-sh,DC=local"
-
-# For testing
-$Test = $true
 $CopyUsersDir = $True
 $IfCompress = $true # If not test make it $True
-$ouRoot = "court-sh"  # OU Root
-#---------------------------
-
-# Define OU Root name and sub Name 
-if ($Test -eq $false) {
-    $ou_1 = "magistrati" # OU Level 1    
-    $BackupDestinationRoot =  "f:\bak"        # "\\BackupServer\Backup"  # Central backup location (Modify as needed)
-    $LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
-}
-else {  ###### For Test ######
-    $ou_1 = "staff" # OU Level 1    
-    $BackupDestinationRoot =  "J:\Projects\powershell\data" 
-    $LogFile = [String]::Format("J:\Projects\powershell\data\{0}_{1}_backup_log.txt", $YearName, $MonthName)
-}
-$OUName = "OU=$ou_1,OU=$ouRoot"
-
-# Define the OU Distinguished Name (Modify as needed)
-$OU = "$OUName,$DomainName"
-#---------------------------
+$YearName = (Get-Date).ToString("yyyy")
+$MonthName= [datetime]::Now.Month
 $DayName = [datetime]::Now.DayOfWeek 
 $flDay = $true # Put in dedestination day of week
 $flOU = $true  # Put in dedestination OU name
 
+# Get the domain distinguished name
+$domain = Get-ADDomain
+$DomainName  = $domain.DistinguishedName
+
+
+#---------------------------
+
+
+$OU = Get-ADOrganizationalUnit -Filter "Name -eq '$ou_1'" -Properties DistinguishedName | Select-Object -ExpandProperty DistinguishedName
+$LogFile = [string]::Format("{0}\{1}_{2}_backup_log.txt",$logFilePath,$YearName,$MonthName)        # Log file path
+
+# Define the OU Distinguished Name (Modify as needed)
 
 # Ensure log directory exists
 $LogDir = Split-Path -Path $LogFile -Parent
