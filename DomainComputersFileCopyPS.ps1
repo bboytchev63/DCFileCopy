@@ -1,15 +1,18 @@
-# Backup Configuration Ver. 0.0.0.6
+# Backup Configuration Ver. 0.0.0.7
 # to do : add params
+# add copy-item
+    #[int16]$Copy = 0,
+    #[parameter(Position = 4)]
+
 param (
     [parameter(mandatory ,  Position = 0)]
-    [string]$BackupSourcePath, 
+    [string]$BackupSourcePath = "d$\", 
     [parameter(mandatory ,  Position = 1)]
-    [string]$BackupDestinationRoot, 
+    [string]$BackupDestinationRoot= "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
     [string]$backupFileExt = "*.ppt?",
     [parameter(Position = 3)]
     [string]$ou_1 = "staff"  
-
 )
 $logFilePath =  Get-Location
 $BackupSource = $BackupSourcePath+$backupFileExt

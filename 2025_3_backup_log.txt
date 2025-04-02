@@ -70,3 +70,21 @@ Start archive 03/28/2025 14:36:32
 03/28/2025 15:13:55 - Backup successful for W4W10SHDC56
 Start archive 03/28/2025 15:13:55
 - End Archive, backup ['\'DELOVODSTVO] 03/28/2025 15:15:28 -
+---------- Start_backup 03/31/2025 15:22:21 ----------
+03/31/2025 15:22:23 - Backup successful for W4W10SHDC63
+03/31/2025 15:22:31 - Backup successful for W4W10SHDC08
+03/31/2025 15:22:43 - Backup successful for W4W10SHDC07
+03/31/2025 15:23:19 - Backup successful for W4W10SHDC57
+03/31/2025 15:23:49 - Backup successful for W4W10SHDC06
+03/31/2025 15:24:45 - Backup successful for W4W10SHDC05
+Start archive 03/31/2025 15:24:45
+- End Archive, backup ['\'staff] 03/31/2025 15:24:48 -
+---------- Start_backup 03/31/2025 15:30:27 ----------
+03/31/2025 15:30:27 - Backup successful for W4W10SHDC63
+03/31/2025 15:30:27 - Backup successful for W4W10SHDC08
+03/31/2025 15:30:27 - Backup successful for W4W10SHDC07
+03/31/2025 15:30:28 - Backup successful for W4W10SHDC57
+03/31/2025 15:30:28 - Backup successful for W4W10SHDC06
+03/31/2025 15:30:28 - Backup successful for W4W10SHDC05
+Start archive 03/31/2025 15:30:28
+- End Archive, backup ['\'staff] 03/31/2025 15:30:28 -

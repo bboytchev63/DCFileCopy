@@ -1,7 +1,33 @@
+=================================
+(Copy-Item -Recurse $srcPath -Destination $destPath -passThru).count
+=================================
+
+
+
 $dn = $testingThis -split ',', 2
 $dn = $dn[1]
 $dn
 ================================
+$copyParams = @{
+    Path        = "\\Server01\Share\Get-Widget.ps1"
+    Destination = "\\Server12\ScriptArchive\Get-Widget.ps1.txt"
+}
+Copy-Item @copyParams
+.................
+$Session = New-PSSession -ComputerName "Server01" -Credential "Contoso\User01"
+$copyParams = @{
+    Path        = "C:\MyRemoteData\scripts"
+    Destination = "D:\MyLocalData\scripts"
+    FromSession = $Session
+    Recurse     = $true
+}
+Copy-Item @copyParam
+''''''''''''''''''''''
+ Copy-Item -Path D:\temp\tree\* -Include ex*
+...........................
+Copy-Item -Path "C:\source\*" -Destination "D:\destination" -Include "*.log" -Exclude "*.tmp"
+
+============================================================
 $ouName = "magistrati"
 Get-ADOrganizationalUnit -Filter "Name -eq '$ouName'" -Properties DistinguishedName | Select-Object -ExpandProperty DistinguishedName
 =============================
