@@ -1,0 +1,7 @@
+{
+    "Destination":  "J:\\Projects\\powershell\\data\\staff\\Thursday\\W4W10SHDC05",
+    "Path":  "d$",
+    "Recurse":  true,
+    "filter":  "*.xls?",
+    "passThru":  true
+}

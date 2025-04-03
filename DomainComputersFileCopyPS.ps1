@@ -91,9 +91,9 @@ foreach ($Computer in $Computers) {
             Recurse     = $True
             passThru    = $True
         }
-        # Copy-Item @copyParams
+        Copy-Item @copyParams
         $copyParams   | ConvertTo-Json | Set-Content -Path ".\parameters.json"
-        Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
+        #Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
         
 
         # Log success
