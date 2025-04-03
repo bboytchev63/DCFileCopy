@@ -1,23 +1,24 @@
 # Backup Configuration Ver. 0.0.0.7
 # to do : add params
 # add copy-item
-    #[int16]$Copy = 0,
-    #[parameter(Position = 4)]
 
 param (
-    [parameter(mandatory ,  Position = 0)]
+    [parameter(Position = 0)]
     [string]$BackupSourcePath = "d$\", 
-    [parameter(mandatory ,  Position = 1)]
-    [string]$BackupDestinationRoot= "J:\Projects\powershell\data", 
+    [parameter(Position = 1)]
+    [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
-    [string]$backupFileExt = "*.ppt?",
+    [string]$backupFileExt = "*.xls?"  ,  # "*.doc?,*.ppt?,*.xls?",
     [parameter(Position = 3)]
     [string]$ou_1 = "staff"  
+    #[parameter(Position = 4)]
+    #[int16]$Copy = 0 # 0 = xcopy , 1 = copy-item
+
 )
 $logFilePath =  Get-Location
 $BackupSource = $BackupSourcePath+$backupFileExt
 #-----------------
-$CopyUsersDir = $True
+#$CopyUsersDir = $True
 $IfCompress = $true # If not test make it $True
 $YearName = (Get-Date).ToString("yyyy")
 $MonthName= [datetime]::Now.Month
@@ -26,8 +27,8 @@ $flDay = $true # Put in dedestination day of week
 $flOU = $true  # Put in dedestination OU name
 
 # Get the domain distinguished name
-$domain = Get-ADDomain
-$DomainName  = $domain.DistinguishedName
+#$domain = Get-ADDomain
+#$DomainName  = $domain.DistinguishedName
 
 
 #---------------------------
@@ -69,16 +70,33 @@ foreach ($Computer in $Computers) {
     if (Test-Connection -ComputerName $Computer -Count 1 -Quiet) {
         # Ensure destination folder exists
         If (!(Test-Path -Path $DestinationPath)) {
-            New-Item -ItemType Directory -Path $DestinationPath -Force
+            New-Item -ItemType Directory -Path $DestinationPath -Force 
         }
 
         # Perform backup using robocopy
         # robocopy $SourcePath $DestinationPath /E /COPY:DAT /LOG+:$LogFile /R:2 /W:5
+
+        <# Using xcopy
         xcopy $SourcePath $DestinationPath /S /D /Y /Z 
         if ($CopyUsersDir) {
             xcopy "\\$Computer\c$\users\$backupFileExt" $DestinationPath\users\ /S /D /Y /Z
         } 
+        #>
+
+        ##### Using Copy-Item #####
+        $copyParams = @{
+            Path        = $BackupSourcePath
+            Destination = $DestinationPath
+            filter      = $backupFileExt
+            Recurse     = $True
+            passThru    = $True
+        }
+        Copy-Item @copyParams
+        
+        
+
         # Log success
+        
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer"
     } else {
         # Log failure
