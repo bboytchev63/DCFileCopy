@@ -1,9 +1,40 @@
 =================================
 (Copy-Item -Recurse $srcPath -Destination $destPath -passThru).count
 =================================
+# Define a variable
+$day = "Wednesday"
+
+# Use a switch statement to handle different cases
+switch ($day) {
+    "Monday" {
+        Write-Output "Start of the work week!"
+    }
+    "Tuesday" {
+        Write-Output "Second day of the work week."
+    }
+    "Wednesday" {
+        Write-Output "Midweek already!"
+    }
+    "Thursday" {
+        Write-Output "Almost there!"
+    }
+    "Friday" {
+        Write-Output "Last day of the work week!"
+    }
+    "Saturday" {
+        Write-Output "Weekend time!"
+    }
+    "Sunday" {
+        Write-Output "Rest and recharge for the week ahead."
+    }
+    Default {
+        Write-Output "Not a valid day of the week."
+    }
+}
 
 
 
+==================================
 $dn = $testingThis -split ',', 2
 $dn = $dn[1]
 $dn
