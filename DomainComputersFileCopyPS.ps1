@@ -4,7 +4,7 @@
 
 param (
     [parameter(Position = 0)]
-    [string]$BackupSourcePath = "d$\", 
+    [string]$BackupSourcePath = "d$", 
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
@@ -91,8 +91,9 @@ foreach ($Computer in $Computers) {
             Recurse     = $True
             passThru    = $True
         }
-        Copy-Item @copyParams
-        
+        # Copy-Item @copyParams
+        $copyParams   | ConvertTo-Json | Set-Content -Path ".\parameters.json"
+        Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
         
 
         # Log success
