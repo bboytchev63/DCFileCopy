@@ -1,5 +1,5 @@
 =================================
-(Copy-Item -Recurse $srcPath -Destination $destPath -passThru).count
+(Copy-Item -Recurse $srcPath -Destination $destPath -Include "*.docx", "*.xlsx" -passThru).count
 =================================
 # Define a variable
 $day = "Wednesday"
