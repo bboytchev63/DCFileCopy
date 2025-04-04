@@ -17,7 +17,7 @@ param (
 
 )
 $logFilePath =  Get-Location
-$BackupSource = $BackupSourcePath+$backupFileExt
+$BackupSource = $BackupSourcePath # no file extentions then using RoboCopy
 #-----------------
 #$CopyUsersDir = $True
 $IfCompress = $true # If not test make it $True
@@ -54,7 +54,7 @@ $Computers = Get-ADComputer -Filter {Enabled -eq $true} -SearchBase $OU | Select
 
 # Iterate over each computer and attempt backup
 foreach ($Computer in $Computers) {
-    $SourcePath = "\\$Computer\$BackupSource"
+    $SourcePath = "'\\$Computer\$BackupSource'"
     
     # put day of week into destination path
     if ($flDay)  {
@@ -76,9 +76,9 @@ foreach ($Computer in $Computers) {
 
         # Perform backup using robocopy
         # robocopy $SourcePath $DestinationPath /E /COPY:DAT /LOG+:$LogFile /R:2 /W:5
-        $source = $Computer+"\\"+$BackupSourcePath
-        robocopy $source $DestinationPath    $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
-
+        $RoboCopyPatarms = $SourcePath+' '+$DestinationPath+' '+$backupFileExt+"/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
+        #robocopy $source $DestinationPath  $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
+        Robocopy.exe $RoboCopyPatarms
         # Log success
         
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$source+" , destination : "+destination
