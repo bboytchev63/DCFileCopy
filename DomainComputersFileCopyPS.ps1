@@ -12,9 +12,6 @@ param (
     [string]$backupFileExt = "*.ppt?* *.xls?"  ,  # "*.doc? *.ppt? *.xls?",
     [parameter(Position = 3)]
     [string]$ou_1 = "staff"  
-    #[parameter(Position = 4)]
-    #[int16]$Copy = 0 # 0 = xcopy , 1 = copy-item
-
 )
 $logFilePath =  Get-Location
 $BackupSource = $BackupSourcePath # no file extentions then using RoboCopy
@@ -78,12 +75,11 @@ foreach ($Computer in $Computers) {
         #robocopy $source $DestinationPath  $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
 
         # $RoboCopyParams = "  /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
-        Robocopy.exe $sourcepath $DestinationPath $backupFileExt # /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
-        $SourcePath > .\0.txt
-        $DestinationPath >> .\0.txt
+        # OK : Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
+        # not Robocopy.exe = "\\$Computer\$BackupSource " "$DestinationPath "  "$backupFileExt "  "/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         # Log success
-        
-        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$SourcePath+" , destination : "+destination
+        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
+        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "  # +$SourcePath+" , destination : "+destination
     } else {
         # Log failure
         Add-Content -Path $LogFile -Value "$(Get-Date) - Skipping $Computer (Offline)"
