@@ -104,6 +104,26 @@ Get-ADOrganizationalUnit -Filter "Name -eq '$ouName'" -Properties DistinguishedN
 ************************************************************************************************
 ****  RoboCopy  ********************************************************************************
 robocopy "source" "destination" /TEE /FP /V /LOG:"C:\Logs\Robocopy_V_Log_%date:~-10,2%"-"%date:~7,2%"-"%date:~-4,4%.txt
+ robocopy '\\W4W10SHDC63\d$' J:\Projects\powershell\data\staff\Friday\W4W10SHDC63 *.xls? *.doc*
+------
+param ($configFile)
+
+$config = Import-Csv $configFile
+$what = "/COPYALL /B /SEC/ /MIR"
+$options = "/R:0 /W:0 /NFL /NDL"
+$logDir = "C:\Backup\"
+
+foreach ($line in $config)
+{
+ $source = $($line.SourceFolder)
+ $dest = $($line.DestFolder)
+ $logfile =  $logDIr 
+ $logfile += Split-Path $dest -Leaf
+ $logfile += ".log"
+
+ robocopy "$source $dest $what $options /LOG:MyLogfile.txt"
+}
+---------------
 
 
 

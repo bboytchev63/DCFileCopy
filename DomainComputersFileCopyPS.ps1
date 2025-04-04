@@ -78,8 +78,9 @@ foreach ($Computer in $Computers) {
         #robocopy $source $DestinationPath  $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
 
         # $RoboCopyParams = "  /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
-        Robocopy.exe $sourcepath $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
-
+        Robocopy.exe $sourcepath $DestinationPath $backupFileExt # /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
+        $SourcePath > .\0.txt
+        $DestinationPath >> .\0.txt
         # Log success
         
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$SourcePath+" , destination : "+destination
