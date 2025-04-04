@@ -124,6 +124,9 @@ foreach ($line in $config)
  robocopy "$source $dest $what $options /LOG:MyLogfile.txt"
 }
 ---------------
+robocopy "\`"$sourceFolder"\`" "\`"$destinationFolder"\`" /MIR
+
+
 
 
 

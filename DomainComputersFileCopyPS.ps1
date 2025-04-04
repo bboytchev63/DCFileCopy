@@ -9,7 +9,7 @@ param (
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
-    [string]$backupFileExt = "*.ppt?* *.xls?"  ,  # "*.doc? *.ppt? *.xls?",
+    [string]$backupFileExt = "*.doc? *.ppt?* *.xls?"  ,  # "*.doc? *.ppt? *.xls?",
     [parameter(Position = 3)]
     [string]$ou_1 = "staff"  
 )
