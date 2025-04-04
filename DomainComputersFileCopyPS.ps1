@@ -1,7 +1,8 @@
 # Backup Configuration Ver. 0.0.0.7
-# to do : add params
-# add copy-item
-
+# to do : add params : OK
+# add copy-item ; not OK
+# add Robocopy // https://www.youtube.com/watch?v=099Df3jCPBI //
+ 
 param (
     [parameter(Position = 0)]
     [string]$BackupSourcePath = "d$\my documents", 
@@ -83,7 +84,8 @@ foreach ($Computer in $Computers) {
         } 
         #>
 
-        ##### Using Copy-Item #####
+        ##### Using Copy-Item - not working OK #####
+        <#
         $copyParams = @{
             Path        = $BackupSourcePath
             Destination = $DestinationPath
@@ -99,7 +101,7 @@ foreach ($Computer in $Computers) {
         $backupFileExt | Out-File -FilePath ".\parameters.txt" -Append
 
         #Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
-        
+        #>
 
         # Log success
         
