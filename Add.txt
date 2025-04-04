@@ -101,4 +101,12 @@ Get-ADOrganizationalUnit -Filter "Name -eq '$ouName'" -Properties DistinguishedN
 
         #Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
         #>
-*******************************************************
+************************************************************************************************
+****  RoboCopy  ********************************************************************************
+robocopy "source" "destination" /TEE /FP /V /LOG:"C:\Logs\Robocopy_V_Log_%date:~-10,2%"-"%date:~7,2%"-"%date:~-4,4%.txt
+
+
+
+
+
+

@@ -5,7 +5,7 @@
  
 param (
     [parameter(Position = 0)]
-    [string]$BackupSourcePath = "d$\my documents", 
+    [string]$BackupSourcePath = "d$", 
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
@@ -75,13 +75,14 @@ foreach ($Computer in $Computers) {
         }
 
         # Perform backup using robocopy
-        # robocopy $SourcePath $DestinationPath /E /COPY:DAT /LOG+:$LogFile /R:2 /W:5
-        $RoboCopyPatarms = $SourcePath+' '+$DestinationPath+' '+$backupFileExt+"/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         #robocopy $source $DestinationPath  $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
-        Robocopy.exe $RoboCopyPatarms
+
+        # $RoboCopyParams = "  /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
+        Robocopy.exe $sourcepath $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
+
         # Log success
         
-        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$source+" , destination : "+destination
+        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$SourcePath+" , destination : "+destination
     } else {
         # Log failure
         Add-Content -Path $LogFile -Value "$(Get-Date) - Skipping $Computer (Offline)"
