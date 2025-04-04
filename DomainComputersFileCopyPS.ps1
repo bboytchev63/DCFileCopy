@@ -9,7 +9,7 @@ param (
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
-    [string]$backupFileExt = "*.xls?"  ,  # "*.doc?,*.ppt?,*.xls?",
+    [string]$backupFileExt = "*.ppt?* *.xls?"  ,  # "*.doc? *.ppt? *.xls?",
     [parameter(Position = 3)]
     [string]$ou_1 = "staff"  
     #[parameter(Position = 4)]
@@ -76,36 +76,12 @@ foreach ($Computer in $Computers) {
 
         # Perform backup using robocopy
         # robocopy $SourcePath $DestinationPath /E /COPY:DAT /LOG+:$LogFile /R:2 /W:5
-
-        <# Using xcopy
-        xcopy $SourcePath $DestinationPath /S /D /Y /Z 
-        if ($CopyUsersDir) {
-            xcopy "\\$Computer\c$\users\$backupFileExt" $DestinationPath\users\ /S /D /Y /Z
-        } 
-        #>
-
-        ##### Using Copy-Item - not working OK #####
-        <#
-        $copyParams = @{
-            Path        = $BackupSourcePath
-            Destination = $DestinationPath
-            filter      = $backupFileExt
-            Recurse     = $True
-            passThru    = $True
-            force       = $true
-        }
-        Copy-Item @copyParams -ErrorAction Ignore
-        $copyParams   | ConvertTo-Json | Set-Content -Path ".\parameters.json"
-        $BackupSourcePath | Set-Content -Path ".\parameters.txt"  
-        $DestinationPath | Out-File -FilePath ".\parameters.txt" -Append
-        $backupFileExt | Out-File -FilePath ".\parameters.txt" -Append
-
-        #Copy-Item -Path $BackupSourcePath -Destination $DestinationPath -Filter $backupFileExt
-        #>
+        $source = $Computer+"\\"+$BackupSourcePath
+        robocopy $source $DestinationPath    $backupFileExt  /S /COPY:DATSO /UNILOG+:$logfilepath\robolog.txt /R:2 /W:5 /NFL /NDL
 
         # Log success
         
-        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer"
+        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "+$source+" , destination : "+destination
     } else {
         # Log failure
         Add-Content -Path $LogFile -Value "$(Get-Date) - Skipping $Computer (Offline)"

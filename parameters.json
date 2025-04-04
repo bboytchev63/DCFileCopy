@@ -1,8 +1,0 @@
-{
-    "passThru":  true,
-    "Recurse":  true,
-    "filter":  "*.xls?",
-    "Destination":  "J:\\Projects\\powershell\\data\\staff\\Thursday\\W4W10SHDC05",
-    "Path":  "d$\\my documents",
-    "force":  true
-}
