@@ -9,7 +9,7 @@ param (
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
-    [string]$backupFileExt = "*.doc?"  ,  # "*.doc? *.ppt? *.xls?",
+    [string]$backupFileExt = "*.xls?"  ,  # "*.doc? *.ppt? *.xls?",
     [parameter(Position = 3)]
     [string]$ou_1 = "DELOVODSTVO"  
 )
@@ -78,7 +78,9 @@ foreach ($Computer in $Computers) {
         # OK : Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
         # not Robocopy.exe = "\\$Computer\$BackupSource " "$DestinationPath "  "$backupFileExt "  "/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         # Log success
-        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL
+
+        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V
+        
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "  # +$SourcePath+" , destination : "+destination
     } else {
         # Log failure
