@@ -9,9 +9,9 @@ param (
     [parameter(Position = 1)]
     [string]$BackupDestinationRoot = "J:\Projects\powershell\data", 
     [parameter(Position = 2)]
-    [string]$backupFileExt = "*.ppt?"  ,  # "*.doc? *.ppt? *.xls?",
+    [string]$backupFileExt = "*.doc? *.xls?"  ,  # "*.doc? *.ppt? *.xls?",
     [parameter(Position = 3)]
-    [string]$ou_1 = "SECRETARIES"  
+    [string]$ou_1 = "staff"  
 )
 $logFilePath =  Get-Location
 $BackupSource = $BackupSourcePath # no file extentions then using RoboCopy
@@ -79,8 +79,8 @@ foreach ($Computer in $Computers) {
         # not Robocopy.exe = "\\$Computer\$BackupSource " "$DestinationPath "  "$backupFileExt "  "/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         # Log success
 
-        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /SECRETARIES /XA:SH
-        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /XA:SH
+        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /XA:S /XJ
+        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /XA:S /XJ
 
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "  # +$SourcePath+" , destination : "+destination
     } else {
