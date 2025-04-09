@@ -82,7 +82,7 @@ foreach ($Computer in $Computers) {
         Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNIL:robolog.txt /XJ # /V /XA:S /XA:H  /R:2 /W:5 /NFL /NDL
         Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /XJ # /XA:SH /V /R:2 /W:5 /NFL /NDL
 
-        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "  # +$SourcePath+" , destination : "+destination
+        Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer"  
     } else {
         # Log failure
         Add-Content -Path $LogFile -Value "$(Get-Date) - Skipping $Computer (Offline)"
@@ -90,6 +90,7 @@ foreach ($Computer in $Computers) {
 }
 
 # Archive files with standart PS command
+Add-Content -Path $LogFile -Value "End Copy from $Computer\d$\  ; $Computer\c$\users\    to  $DestinationPath  "
 Add-Content -Path $LogFile -Value "Start archive $(Get-Date)"
 if ($IfCompress) {
     if ( $flDay ) { 
