@@ -79,8 +79,8 @@ foreach ($Computer in $Computers) {
         # not Robocopy.exe = "\\$Computer\$BackupSource " "$DestinationPath "  "$backupFileExt "  "/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         # Log success
 
-        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /XA:S /XJ
-        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL /V /XA:S /XJ
+        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNIL:robolog.txt  /V /XA:SH /XJ #/R:2 /W:5 /NFL /NDL
+        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt  /V /XA:SH /XJ #/R:2 /W:5 /NFL /NDL
 
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer with source : "  # +$SourcePath+" , destination : "+destination
     } else {
