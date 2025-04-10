@@ -79,8 +79,8 @@ foreach ($Computer in $Computers) {
         # not Robocopy.exe = "\\$Computer\$BackupSource " "$DestinationPath "  "$backupFileExt "  "/S /COPY:DATSO /UNILOG+:robolog.txt /R:2 /W:5 /NFL /NDL"
         # Log success
 
-        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNIL:robolog.txt /XJ # /V /XA:S /XA:H  /R:2 /W:5 /NFL /NDL
-        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /XJ # /XA:SH /V /R:2 /W:5 /NFL /NDL
+        Robocopy.exe "\\$Computer\d$\" $DestinationPath $backupFileExt /S /COPY:DATSO /UNIL:robolog.txt /XJ /NFL /NDL # /V /XA:S /XA:H  /R:2 /W:5 /NFL /NDL
+        Robocopy.exe "\\$Computer\c$\users\" $DestinationPath\usersC $backupFileExt /S /COPY:DATSO /UNILOG+:robolog.txt /XJ /NFL /NDL # /XA:SH /V /R:2 /W:5 /NFL /NDL
 
         Add-Content -Path $LogFile -Value "$(Get-Date) - Backup successful for $Computer"  
     } else {
@@ -90,7 +90,8 @@ foreach ($Computer in $Computers) {
 }
 
 # Archive files with standart PS command
-Add-Content -Path $LogFile -Value "End Copy from $Computer\d$\  ; $Computer\c$\users\    to  $DestinationPath  "
+$dest = "$BackupDestinationRoot\$ou_1\$DayName\"
+Add-Content -Path $LogFile -Value "End Copy from OU : $ou_1  Path : $BackupSourcePath ;\c$\users\  ; Files : < $backupFileExt >  to destination : $dest "
 Add-Content -Path $LogFile -Value "Start archive $(Get-Date)"
 if ($IfCompress) {
     if ( $flDay ) { 
